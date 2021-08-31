@@ -2,7 +2,7 @@
 
 This repository contains the template that I've been using since September 2019, first at the Bachelor's Degree in Electronics at UdG and later at the Master's Degree in Electronics at ETSETB, UPC. After hundreds of documents, it has proven to be very useful to create elegant documents in a short span of time. I honestly believe that without LaTeX, it would have taken me a longer time to create documents of less quality.
 
-This template eases the task of:
+This template eases the following tasks:
 
 - Differentiating between statement and solution.
 - Typing equations and sets of equations.
