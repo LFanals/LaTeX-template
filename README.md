@@ -13,21 +13,27 @@ This template eases the task of:
 ## Screenshots
 
 Titlepage:
+
 ![alt text](./screenshots/titlepage.png "Title")
 
 Table of contents:
+
 ![alt text](./screenshots/toc.png "Title")
 
 Statement and solution:
+
 ![alt text](./screenshots/statement-solution-2.png "Title")
 
 Laboratory report:
+
 ![alt text](./screenshots/lab.png "Title")
 
 Vectorial plot:
+
 ![alt text](./screenshots/plot.png "Title")
 
 Code:
+
 ![alt text](./screenshots/code-vhdl.png "Title")
 
 
@@ -36,15 +42,15 @@ Code:
 
 Although this template has worked fine on both Windows and Linux, I prefer the later. My current workflow is based on:
 
-- Arch Linux as the operating system.
-- Qtile as the window manager.
-- Vim as the text editor, plus some snippets and LaTeX packages.
-- Ranger as the file manager.
-- Zathura as the PDF viewer.
-- Git as the version control software.
-- Flameshot as the program to take screenshots.
-- [LFanals/CircuiTikZ-tool](https://www.github.com/LFanals/CircuiTikZ-tool) as the program to speed the creation of schematics.
-- Qutebrowser as the main browser.
+- **Arch Linux** as the operating system.
+- **Qtile** as the window manager.
+- **Vim** as the text editor, plus some snippets and LaTeX packages.
+- **Ranger** as the file manager.
+- **Zathura** as the PDF viewer.
+- **Git** as the version control software.
+- **Flameshot** as the program to take screenshots.
+- **[LFanals/CircuiTikZ-tool](https://www.github.com/LFanals/CircuiTikZ-tool)** as the program to speed the creation of schematics.
+- **Qutebrowser** as the main browser.
 
 
 
