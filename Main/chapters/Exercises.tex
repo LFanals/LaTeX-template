@@ -1,0 +1,246 @@
+% Revisar
+% Intentar que DFT quedi més maca
+
+
+\chapter{Exercises}
+
+\section{Exercise 1}
+
+\begin{exbox}{Gm-C filters}{filters}
+	\bfseries
+We promised Gm-C filters to be an advantageous solution to overcome main limitations of RC-OpAmps filters, i.e. operation at high frequencies and operation with low power consumption. It's the moment now to make some numbers and check wether this is really true.
+
+Assume a transconductance $G_m = \SI{1}{\mA}$. Calculate the expected corner frequencies achievable in a $1^{st}$-order single-ended filter with capacitor values of \SI{20}{\pF}, \SI{5}{\pF}, \SI{2}{\pF}, \SI{500}{\fF} and \SI{200}{\fF}. Which is the reasonable range of frequencies in a microelectronic CMOS implementation? Would this frequency range be achievable in a RC-OpAmp implementation?
+\end{exbox}
+
+The \cref{filters} contains the statement and solution of the exercise.
+
+Considering the single-endend shcematic shown at the slide number $52$, one can prove that 
+\begin{equation}
+   \frac{v_{out}}{v_{in}} = \frac{ - G_m }{s C_{int}} \ .
+\end{equation}
+Thus, the pole frequency appears at 
+\begin{equation}
+   f_p = \frac{1}{2 \pi} \frac{G_{m}}{C_{int}} \ .
+\end{equation}
+From this formula, the different frequencies can be calculated, taking $G_{m} = 1$ mA/V.
+\begin{table}[H] \centering
+   \begin{tabular}{ |r|r| } \hline
+	   $C_{int}$ & $f_p$  \\ \hline \hline
+	   \SI{20}{\pF} & \SI{7.96}{\MHz} \\ \hline
+	   \SI{5}{\pF} & \SI{31.83}{\MHz} \\ \hline
+	   \SI{2}{\pF} & \SI{79.58}{\MHz} \\ \hline
+	   \SI{500}{\fF} & \SI{318.31}{\MHz} \\ \hline
+	   \SI{200}{\fF} & \SI{795.77}{\MHz} \\ \hline
+   \end{tabular}
+   \caption{Pole frequency for the given $C_{int}$ values}
+\end{table}
+
+
+The OpAmps we have analyzed in the subject require a low-frequency pole when working closed-loop to get a decent phase margin. Also, they usually require buffers. These two factors make them only suitable for low-medium frequencies, so they can have a corner frequency (bandwidth) of a few MHz at best. Slide 56 suggests me that they are only suitable up to \SI{10}{MHz}.
+
+Thus, I guess that only the \SI{7.96}{\MHz} would be achievable. The larger frequencies would not be possible, as an RC-OpAmp would not be capable of achieving this large bandwidths.
+
+
+\begin{pexbox}{filters2}
+	\bfseries
+Assume a $1^{st}$ order Gm-C single-ended filter with an integrator capacitor of \SI{300}{\fF}. Calculate the expected corner frequencies with $G_m$ values of \SI{1}{\mA/\V}, \SI{100}{\uA/\V}, \SI{10}{\uA/\V}, \SI{1}{\uA/\V} and \SI{100}{\nA/\V}. Assuming $G_m = g_m$, calculate the required DC current consumption to achieve these $G_m$'s, asssuming an overdrive $V_{OD} = \SI{200}{\mV}$. Which is the range of frequencies for which you get ultra-low currents $< \SI{1}{\uA}$? How can you further reduce the current to obtain a $G_m = \SI{100}{\nA/V}$?
+\end{pexbox}
+
+
+Now, we are given different $G_m$ values, for which the different corner frequencies can be calculated.
+\begin{table}[H] \centering
+   \begin{tabular}{ |r|r|r| } \hline
+	   $G_m$ & $f_p$ & $I_{DQ}$  \\ \hline \hline
+	   \SI{1}{\mA/\V} & \SI{530.51}{\MHz} & \SI{100}{\uA} \\ \hline
+	   \SI{100}{\uA/\V} & \SI{53.05}{\MHz} & \SI{10}{\uA} \\ \hline
+	   \SI{10}{\uA/\V} & \SI{5.30}{\MHz} & \SI{1}{\uA} \\ \hline
+	   \SI{1}{\uA/\V} & \SI{530.51}{\kHz} & \SI{100}{\nA} \\ \hline
+	   \SI{100}{\nA/\V} & \SI{53.05}{\kHz} & \SI{10}{\nA} \\ \hline
+   \end{tabular}
+   \caption{Pole frequency and current consumption for the given $C_{int}$ values}
+\end{table}
+
+Thus, from the table, the range of frequencies for which we get ultra-low currents is 
+\begin{equation}
+	\boxed{
+		0 \leq f \leq \SI{5.3051}{\MHz}
+	}
+\end{equation}
+
+% FINISH ' last page of MOS reminder
+One would think that as $g_m = \frac{2 I_{DQ}}{V_{OD}}$, there's a direct relation between both $G_m$ and the current, and that if we desire to reduce the current consumption, then $G_m$ must also be decreased. The thing is that this can be true while working in strong inversion. 
+
+Instead, in the weak inversion zone ($V_{OD} < 0$ V), the $g_m$ transconductance is at is maximum for a given drain current. In weak inversion,
+\begin{equation}
+   g_m  = \frac{I_D}{\eta V_T} \ .
+\end{equation}
+For instance, in the slides "MOS\_reminder", $\eta = 1.5$. Taking a typical value for the thermal voltage, $V_T = \SI{0.026}{\V}$, the factor that multiplies $I_D$ is $\approx 25$. 
+
+If the same transistor was in strong inversion, $V_{OD} > \SI{200}{\mV}$. Taking this limit value, we would get $g_m = 10 I_{D}$. The $I_D$ factor would be even lower for larger $V_{OD}$ values.
+
+Thus, the $g_m$ transconductance can easily be higher in weak inversion for the same $I_D$ current. This is interesting for low-power applications.
+
+
+
+
+\clearpage
+\section{Exercise 2}
+
+
+\begin{exbox}{Gm-C integrator}{filters3}
+	\bfseries
+% p62
+Consider this Gm-C integrator. Assume $C_{INT} = \SI{600}{\fF}$, $k'=\SI{200}{\uA/\V}$, $W/L $ of M1-M2 $= 10$ and $W/L$ of M5 $=20$. Assume $V_T = \SI{0.5}{\V}$ and all transistors biased such that $V_{OD} = \SI{0.25}{\V}$. An additional CMFB circuit (not drawn) sets the output common-mode to \SI{2.5}{\V}.
+
+\begin{figure}[H]
+	\centering
+	\begin{circuitikz}[american]
+	\ctikzset{tripoles/mos style/arrows}
+	\ctikzset{tripoles/pmos style/nocircle}
+	\draw (2,-3.0) node[nmos](Q1){M1};\draw (Q1.D) to[short] (2,-2.0);
+	\draw (Q1.S) to[short] (2,-4.0);
+	\draw (Q1.G) to[short] (1,-3.0);
+	\draw (6,-3.0) node[nmos](Q2){M2};\draw (Q2.D) to[short] (6,-2.0);
+	\draw (Q2.S) to[short] (6,-4.0);
+	\draw (Q2.G) to[short] (5,-3.0);
+	\draw (2,-0.0) node[pmos](Q3){M3};\draw (Q3.S) to[short] (2,1.0);
+	\draw (Q3.D) to[short] (2,-1.0);
+	\draw (Q3.G) to[short] (1,-0.0);
+	\draw (6,-0.0) node[pmos](Q4){M4};\draw (Q4.S) to[short] (6,1.0);
+	\draw (Q4.D) to[short] (6,-1.0);
+	\draw (Q4.G) to[short] (5,-0.0);
+	\draw (4,-5.0) node[nmos](Q5){M5};\draw (Q5.D) to[short] (4,-4.0);
+	\draw (Q5.S) to[short] (4,-6.0);
+	\draw (Q5.G) to[short] (3,-5.0);
+	\draw (6,-4.0) to[short] (2,-4.0);
+	\draw (2,1.0) to[short] (6,1.0);
+	\draw (2,-1.0) to[short] (2,-2.0);
+	\draw (6,-1.0) to[short] (6,-2.0);
+	\draw (2,-1.0) to[C,l=$C_{int}$] (6,-1.0);
+	\draw (4,-6.0) node[ground]{};
+	\draw (4,1.0) node[vcc]{$V_{CC}$};
+
+
+	\draw (0.5,-0) node{$V_{b}$};
+	\draw (4.5,-0) node{$V_{b}$};
+
+	\draw (1.5,-1) node{$V_{o-}$};
+	\draw (6.5,-1) node{$V_{o+}$};
+
+	\draw (4.5,-2.7) node{$V_{in-}$};
+	\draw (0.5,-2.7) node{$V_{in+}$};
+
+	\draw (2.5,-4.7) node{$V_{control}$};
+	\end{circuitikz}
+\caption{Gm-C integrator}
+\end{figure}
+
+
+Which is the corner frequency that can be obtained from this integrator? Which is the range of input common-mode voltages?
+\end{exbox}
+
+First, one can see that both M3 and M4 are set with a constant voltage, independent of $V_{in+}$ and $V_{in-}$, that is, independent of $v_{in}$. Thus, if $V_{in+}$ raises by $v_d/2$, then $V_{in-}$ diminshes by the same value. The current increase at M1 is provided through $C_{int}$, and its value is equal to the current decrease in M2. The current increase at M1 is 
+\begin{equation}
+   i_{d1} = \frac{v_d}{2}g_m \ .
+\end{equation}
+The voltage difference between the output terminals is 
+\begin{equation}
+	\begin{split}
+   		v_{out} &= i_{d1} Z_{Cint} \\
+   		v_{out} &= \frac{v_d}{2} g_{m_{1,2}} \frac{1}{s C_{int}}
+	\end{split} \ .
+\end{equation}
+Then,
+\begin{equation}
+   \frac{v_{out}}{v_d} = \frac{1}{2} \frac{g_{m_{1,2}}}{s C_{int}} \ .
+\end{equation}
+Thanks to the given data, the $I_{M1}$ current can be calculated. 
+\begin{equation}
+   \begin{split}
+	  I_{M1} &= \frac{k'}{2} \frac{W}{L} V_{OD}^2 \\
+	  I_{M1} &= \SI{62.5}{\uA}
+   \end{split} \ .
+\end{equation}
+From this, 
+\begin{equation}
+   g_m = \SI{500}{\uA/\V} \ .
+\end{equation}\label{eq:fcorner}
+The frequency for which the gain is $1$,
+\begin{equation}
+   f_{corner} = \frac{1}{2 \pi} \frac{g_{m_{1,2}}}{2 C_{int}} \ .
+\end{equation}
+Which equals 
+\begin{equation}
+	\boxed{
+		f_{corner} = \SI{66.31}{\MHz}
+	}
+\end{equation}
+
+Given that $V_{OD} = \SI{0.25}{\V}$ for all transistors, the minimum $V_{in \ CM}$ is 
+\begin{equation}
+   V_{in \ CM \ min} = V_{DS_{M5} \ min} + V_{OD} + V_{T} \ .
+\end{equation}
+Where $ V_{DS_{M5} \ min} = V_{OD} = \SI{0.25}{\V}$. Thus,
+\begin{equation}
+	\boxed{
+   		V_{in \ CM \ min} = \SI{1}{\V}
+	}
+\end{equation}
+The maximum is set by the CM voltage at the output, which happens to be \SI{2.5}{\V}. Then,
+\begin{equation}
+   V_{in \ CM \ max} = \left(V_{OUT} - V_{OD}\right) + V_{OD} + V_T \ .
+\end{equation}
+So,
+\begin{equation}
+	\boxed{
+   		V_{in \ CM \ max} = \SI{3}{\V}
+	}
+\end{equation}
+With all this,
+\begin{equation}
+	\boxed{
+   		1 \leq V_{in \ CM} \leq \SI{3}{\V}
+	}
+\end{equation}
+
+
+\begin{pexbox}{}
+	\bfseries
+Imagine now we want to benefit from the tunable feature with $V_{control}$ in order to produce a filter with a corner frequency adjustable over one decade (i.e. from $1$ to $10$ times the frequency you obtained in the former section). Which is the range of $V_{control}$ values needed to achieve this frequency range? Which is now the range of input common-mode voltages, for the highest-frequency situation?
+\end{pexbox}
+
+% PROVE !
+From the lecture notes,
+\begin{equation}
+   g_m = k' \sqrt{\left(W/L\right)_1 \left(W/L\right)_5 \frac{1}{2}} \left(V_{control} - V_T\right) \ .
+\end{equation}
+%
+Where, according to the previous section, $V_{control} - V_T = V_{OD} = \SI{0.25}{V}$.
+
+Remember from \eqref{eq:fcorner} that there's a linear relation between $g_m$ and $f_{corner}$. Thus, if $f_{corner}$ can be increased by a factor up to $10$, so does $g_m$. Thus, for this limit case, $V_{control} - V_T$ must also be $10$ times greater, that is, $V_{control} = \SI{3}{\V}$.
+
+Notice that to achieve the corner frequency calculated, $V_{OD} = \SI{0.25}{\V}$, $V_{control}= \SI{0.75}{\V}$. Then, the range to have a corner frequency from $1$ to $10$ times the previosly calculated one,
+\begin{equation}
+	\boxed{
+		\SI{0.75}{\V} \leq V_{control} \leq \SI{3}{\V}
+	}
+\end{equation}
+
+
+For the maximum $V_{control}$ voltage of the previous equation, one can see that $V_{OD} = \SI{2.5}{\V}$. Thus, the minimum voltage at the source of M1 must be also \SI{2.5}{\V}. This would give place to $V_{IN \ CM} = \SI{3.25}{\V}$, which is not possible, because the CMFB is setting the output nodes at \SI{2.5}{\V}.
+% \begin{equation}
+	% \boxed{
+   		% 1 \leq V_{in \ CM} \leq 3 \text{ V}
+	% }
+% \end{equation}
+
+% So, there's a range of high frequencies for which the circuit would not work properly because of the CMFB, which sets the output voltage at $2.5$ V, thus limiting the corner frequency.
+
+Because of this, the maximum voltage at the drain of M5 is \SI{2.25}{\V}, for which only up to $7$ times the calculated corner frequency is possible.
+
+
+
+
+
+

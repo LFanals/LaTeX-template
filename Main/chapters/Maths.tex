@@ -1,0 +1,90 @@
+\chapter{Maths}
+
+\section{Basics}
+\noindent \LaTeX \ is known by the great support to displaying math equations and expressions. Equations are written in cursive by default, in a Sans-Serif font. Their typography is often the fastest way to identify if a document is written in \LaTeX. Equations are numbered by default.
+\begin{equation}
+    \hat{x}_k^- = A_k \hat{x}_{k-1} + B_k u_k 
+\end{equation}
+%
+\noindent Sometimes, variable definitions are needed. While papers tend to explain variables in a new paragraph, in my opinion the following provides a nice readability.
+\begin{equation}
+    P_k^- = A_k P_{k-1} A^T_k + Q_k 
+\end{equation}
+\indent $P_k^-$: uncertainty matrix at the beginning of the $k^{th}$ iteration. \\
+\indent $A_k$: state-transition matrix. \\
+\indent $Q_k$: process noise covariance matrix. 
+
+\noindent To write inline equations dollar signs can be used. For example, I can say that the $Q_k$ matrix is constant over time while $P_k^-$ changes after every iteration.
+
+\noindent It's quite straight-forward to write a multi-line equation.
+\begin{equation} \label{eq:kalman_update}
+    \begin{split}
+        K_k &= P_k^- H_k^T \left( H_k P_k^- H_k^T + R_k \right)^{-1} \\
+        \hat{x}_k &= \hat{x}_k^- + K_k \left( z_k - H_k \hat{x}_k^- \right) \\
+        P_k &= \left( I - K_k H_k \right) P_k^-
+    \end{split}
+\end{equation}
+%
+\noindent You can use a label to set an unique identifier to an equation if you plan on citing it before or after it appears. I could say that \eqref{eq:kalman_update} shows the Kalman filter update step. You can change the preamble to get a different reference.
+
+\noindent Matrices can also be written. They adjust their spaces automatically.
+\begin{equation}
+    \begin{pmatrix}
+        1 & w_0 & w_0^2 & \cdots & w_0^{N-1} \\
+        1 & w_1 & w_1^2 & \cdots & w_1^{N-1} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        1 & w_{N-1} & w_{N-1}^2 & \cdots & w_{N-1}^{N-1} \\
+    \end{pmatrix}
+    \begin{pmatrix}
+        x_0 \\ 
+        x_1 \\
+        \vdots \\
+        x_{N-1}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        X_0 \\
+        X_1 \\
+        \vdots \\
+        X_{N-1}
+    \end{pmatrix}
+\end{equation}
+
+
+
+\section{Special math characters}
+\noindent Greek characters, operators or other special characters can also be typeset. Sometimes it can be hard to find some of them. Here I list some of them. They are extracted from \href{https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols}{wikipedia}.
+
+\noindent Greek characters: $\alpha$, $\beta$, $\gamma, \Gamma$, $\delta$, $\Delta$, $\varDelta$, $\epsilon$, $\varepsilon$, $\zeta$, $\eta$, $\theta$, $\Theta$, $\vartheta$, $\varTheta$, $\iota$, $\kappa$, $\lambda$, $\Lambda$, $\mu$, $\nu$, $\xi$, $\Xi$, $\pi$, $\Pi$, $\varpi$, $\varPi$, $\rho$, $\varrho$, $\sigma$, $\Sigma$, $\varSigma$, $\tau$, $\upsilon$, $\Upsilon$, $\phi$, $\Phi$, $\varphi$, $\varPhi$, $\chi$, $\psi$, $\Psi$, $\varPsi$, $\omega$, $\Omega$.
+
+\noindent Unary opperators: $+$, $-$, $!$, $\#$, $\neg$.
+
+\noindent Relation operators: $<$, $\leq$, $\prec$,  $\preceq$,  $\ll$, $\subset$, $\not\subset$, $\subseteq$,  $\sqsubseteq$, $>$,  $\geq$,  $\succ$,  $\succeq$,  $\gg$,  $\supset$, $\not\supset$, $\supseteq$,  $\sqsupseteq$, $=$, $\doteq$, $\equiv$, $\approx$, $\cong$, $\simeq$, $\sim$, $\propto$, $\neq$, $\parallel$, $\asymp$, $\vdash$, $\in$, $\smile$, $\models$, $\perp$,  $\bowtie$, $\dashv$, $\ni$, $\frown$, $\notin$, $\mid$.
+
+\noindent Binary operators: $\pm$, $\mp$, $\times$, $\div$, $\ast$, $\star$, $\dagger$, $\ddagger$, $\cap$, $\cup$, $\uplus$, $\sqcap$, $\sqcup$, $\vee$, $\wedge$, $\cdot$, $\diamond$, $\bigtriangleup$, $\bigtriangledown$, $\triangleleft$, $\triangleright$, $\bigcirc$, $\bullet$, $\wr$, $\oplus$, $\ominus$, $\otimes$, $\oslash$, $\odot$, $\circ$, $\setminus$, $\amalg$.
+
+\noindent Negated binary operators: $\neq$.
+
+\noindent Set notations: $\emptyset$, $\in$, $\notin$, $\ni$, $\subset$, $\subseteq$, $\supset$, $\supseteq$, $\cup$, $\cap$, $\setminus$.
+
+\noindent Logic notation: $\exists$, $\exists!$,  $\forall$, $\neg$, $\lor$, $\land$, $\implies$, $\Rightarrow$, $\Longleftarrow$, $\Leftarrow$, $\iff$, $\Leftrightarrow$, $\top$, $\bot$. 
+
+\noindent Geometry:  $\angle$, $\triangle$, $\cong$, $\sim$, $\|$, $\perp$, $\overrightarrow{\rm AB}$, $\not\perp$. 
+
+\noindent Delimiters: $|$, $($,  $\lceil$,  $\|$, $)$, $\rceil$,  $/$, $[$, $\langle$, $\lfloor$,  $\backslash$, $]$, $\rangle$, $\rfloor$.  
+
+\noindent Arrows: $\to$, $\mapsto$, $\gets$, $\Rightarrow$, $\Leftarrow$, $\longrightarrow$, $\longmapsto$, $\longleftarrow$, $\Longrightarrow$, $\Longleftarrow$, $\uparrow$, $\downarrow$, $\updownarrow$, $\Uparrow$, $\Downarrow$, $\Updownarrow$.
+
+\noindent Trigonometric functions: $\sin$, $\cos$, $\tan$, $\arcsin$, $\arccos$, $\arctan$, $\csc$, $\sec$, $\cot$,  $\sinh$, $\cosh$, $\tanh$, $\operatorname{arsinh}$, $\operatorname{arcosh}$, $\operatorname{artanh}$, $\operatorname{csch}$, $\operatorname{sech}$, $\coth$, $\operatorname{arcsch}$, $\operatorname{arcsech}$, $\operatorname{arcoth}$.
+
+
+\noindent Others: $\partial$,  $\hbar$, $\imath$, $\jmath$, $\ell$, $\Re$, $\Im$, $\wp$, $\nabla$,  $\infty$, $\aleph$.  
+
+
+
+
+
+
+
+
+\clearpage

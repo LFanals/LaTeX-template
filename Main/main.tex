@@ -1,0 +1,339 @@
+%  LaTeX report template by Lloren Fanals Batllori
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT LAYOUT AND GEOMETRY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Set document default font size, dimensions and geometry
+\documentclass[11pt, a4paper, x11names]{report}
+\usepackage[a4paper, left=30mm, right=20mm, top=25mm, bottom=25mm]{geometry}
+\setlength{\headsep}{20pt}
+\setlength{\footskip}{25pt}
+\sloppy % Force a new line when surpassing the right margin
+
+% Set accepted characters
+\usepackage[utf8]{inputenc} % Use UTF-8 characters
+
+% Set document header and footer
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\fancyhead[L]{\footnotesize{\LaTeX \ template}}
+	\fancyhead[R]{\footnotesize{Llorenç Fanals Batllori}}
+	\fancyfoot[R]{\footnotesize{\thepage}}
+}
+\pagestyle{plain} % Make header and footer appear the same in every page
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MODIFICATIONS FROM DEFAULT: figures, tables, equations, bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Rename default LaTeX structures
+\renewcommand{\contentsname}{Table of contents}
+\renewcommand{\chaptername}{Chapter}
+\renewcommand{\listfigurename}{Figures list}
+\renewcommand{\listtablename}{Tables list}
+\renewcommand{\appendixname}{Appendix}
+
+% Tables and figures captions
+\usepackage{caption}
+% Figures
+\captionsetup[figure]{labelsep=period}
+\renewcommand{\thefigure}{Figure \arabic{figure}}
+\captionsetup[figure]{font=footnotesize, skip=11pt}
+% Tables
+\captionsetup[table]{labelsep=period}
+\renewcommand{\thetable}{Table \arabic{table}}
+\captionsetup[table]{font=footnotesize, skip=11pt}
+
+\setlength{\belowcaptionskip}{-20pt}
+
+% Images
+\usepackage{graphicx}
+\graphicspath{{images/}} % default image directory
+\usepackage{float}
+
+% Count figures, tables and equations as 1, 2, 3.. for all the document
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+\counterwithout{equation}{chapter}
+% Split equations and other stuff
+\usepackage{mathtools}
+
+% Links and reference colors
+\usepackage[svgnames]{xcolor}
+\usepackage{color}
+\usepackage[colorlinks]{hyperref} % href, links
+
+\usepackage{hyperref} 
+\hypersetup{
+	colorlinks=true,
+	linkcolor=, 
+	filecolor=magenta,
+	urlcolor=cyan,
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ELECTRONICS SCHEMATICS 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[american]{circuitikz} % american/european
+\usepackage{siunitx} % \SI units, useful for equations too
+\usetikzlibrary{calc} % relative positions
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SPACINGS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+
+\usepackage{titlesec}
+\linespread{1.3} % Separation between paragraph lines
+\setlength{\parskip}{20pt plus 2pt minus 2pt} % Spacing between paragraphs
+% \titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
+% Chapter
+\titlespacing*{\chapter}{0pt}{-38pt}{-11pt}
+\titleformat{\chapter}[hang] % Keep writing after the chapter number
+{\normalfont\fontsize{16}{16}\bfseries}{\thechapter.}{0.4em}{\bfseries}
+% Section
+\titlespacing*{\section}{0pt}{11pt}{11pt}
+\titleformat{\section}[hang] % Keep writing after the chapter number
+{\normalfont\fontsize{11}{16}\bfseries}{\thesection.}{0.4em}{\bfseries}
+% Section
+\titlespacing*{\subsection}{0pt}{11pt}{11pt}
+\titleformat{\subsection}[hang] % Keep writing after the chapter number
+{\normalfont\fontsize{11}{16}\bfseries}{\thesubsection.}{0.4em}{\bfseries}
+
+% Equation separations with the rest of the elements
+\makeatletter
+\g@addto@macro{\normalsize}{%
+	\setlength{\abovedisplayskip}{6pt}
+	\setlength{\abovedisplayshortskip}{6pt}
+	\setlength{\belowdisplayskip}{6pt}
+	\setlength{\belowdisplayshortskip}{6pt}
+}
+\makeatother
+
+% Use tables that offer spaces
+\usepackage{tabu} % tabularx
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PLOTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{fit}
+\usetikzlibrary{arrows}
+\usepackage{tikz-3dplot}
+
+% % Save figures as PDFs, avoid recomputing them every time
+% \usetikzlibrary{external}
+% \tikzexternalize[prefix=cache/]
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CUSTOM COMMANDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\infigure}[4]{
+	\begin{figure} [h]
+		\centering
+		\includegraphics[scale=#1]{./images/#2}
+		\caption{#3}
+		\label{#4}
+	\end{figure}
+}
+
+% Input Inkscape SVG figures, Giles Castel
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\ink}[4]{
+	\begin{figure}
+		\centering
+		\def\svgscale{#1}
+		\import{./images/}{#2.pdf_tex}
+		\caption{#3}
+		\label{#4}
+	\end{figure}
+	\normalsize
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Statement environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% https://tex.stackexchange.com/questions/451343/alternative-box-style-table-and-curve
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage[most]{tcolorbox}
+\usepackage{cleveref} % cref{label} to get the section that contains the exercise
+
+% Exercise box, contains a title
+\makeatletter
+\tcbset{
+    exbox/.style 2 args={%
+		parbox=false,
+        enhanced,
+        breakable,
+        colback=black!15!white,
+        colframe=black,
+        attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+		title={\textbf{#2}},
+        boxed title size=title,
+        boxed title style={%
+            sharp corners,
+            rounded corners=northwest,
+            colback=tcbcolframe,
+            boxrule=0pt,
+        },
+        underlay boxed title={%
+            \path[fill=tcbcolframe] (title.south west)--(title.south east)
+                to[out=0, in=180] ([xshift=5mm]title.east)--
+                (title.center-|frame.east)
+                [rounded corners=\kvtcb@arc] |-
+                (frame.north) -| cycle;
+        },
+		before skip=20pt plus 2pt, after skip=20pt plus 2pt,
+        #1
+    },
+}
+\makeatother
+
+\newtcolorbox{exbox}[3][]{%
+    exbox={#1}{#2},
+	label={#3}
+}
+
+% Partial exercise box, doesn't contain a title
+\makeatletter
+\tcbset{
+    pexbox/.style ={%
+		parbox=false,
+        enhanced,
+        breakable,
+        colback=black!4!white,
+        colframe=black,
+		before skip=20pt plus 2pt, after skip=20pt plus 2pt,
+        #1
+    },
+}
+\makeatother
+
+\newtcolorbox{pexbox}[2][]{%
+	pexbox={#1},
+	label={#2}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CODE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Code listings
+\usepackage{listings}
+\lstset{aboveskip=22pt,belowskip=0pt} % lstlisting box separation with surrounding text
+
+% VHDL
+\lstdefinelanguage{VHDL}{
+	morekeywords=[1]{
+		library, use, all, entity, is, port, in, out, end, architecture, of, begin, and, or, not, downto, all, if, elsif, when, then, case, process, event, else, generic, signal, not, variable, others, out, integer, range, to, generate, xor, for, STD_LOGIC_VECTOR, STD_LOGIC, IEEE, STD_LOGIC_1164, NUMERIC_STD, STD_LOGIC_ARTIH, STD_LOGIC_UNSIGNED, std_logic_vector, std_logic},
+	morecomment=[l]-
+}
+\colorlet{keyword}{blue!100!black!80}
+\colorlet{comment}{green!80!black!90}
+\lstdefinestyle{vhdl}{
+	language	= VHDL,
+	basicstyle  = \linespread{1.1} \scriptsize \ttfamily,
+	keywordstyle = [1]\color{keyword}\bfseries,
+	keywordstyle = [2]\color{keyword}\bfseries,
+	commentstyle = \color{comment},
+	breaklines = true,
+	tabsize = 4,
+	numbers = left,
+	numberstyle = {\tiny \color{black}},
+	numbersep = 9pt,
+	frame = single,
+	literate={á}{{\'a}}1 {é}{{\'e}}1 {ó}{{\'o}}1 {í}{{\'i}}1 {ú}{{\'u}}1  {à}{\`{a}}1 {è}{\`{e}}1  {ò}{\`{o}}    1  {ï}{\"\i}1  {ç}{\c{c}}1 , % To type Llorenç and other catalan/spanish words
+}
+
+% C
+\lstdefinestyle{C}{ %use this for awesome C code
+	language	= C,
+	basicstyle  = \linespread{1.1} \scriptsize \ttfamily,
+	showstringspaces	= false,
+	keywordstyle	= \bfseries\color{red!80!black},
+	commentstyle	= \color{green!40!black},
+	identifierstyle	= \color{black},
+	stringstyle	= \color{orange},
+	breaklines	= true,
+	% postbreak=\llap{\scriptsize\textcolor{blue}{$\hookrightarrow$}\kern0.25em}
+	tabsize = 4,
+	numbers = left,
+	numberstyle = {\tiny \color{black}},
+	numbersep = 9pt,
+	frame = single,
+	literate={á}{{\'a}}1 {é}{{\'e}}1 {ó}{{\'o}}1 {í}{{\'i}}1 {ú}{{\'u}}1  {à}{\`{a}}1 {è}{\`{e}}1  {ò}{\`{o}}    1  {ï}{\"\i}1  {ç}{\c{c}}1 , % To type Llorenç and other catalan/spanish words
+	literate={{**}}{{{**}\allowbreak}}1, % To break * lines, not the most elegant solution
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MISCELLANEOUS 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[UKenglish]{datetime}
+\synctex=1 % Forward and backward interaction with the .pdf
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Titlepage
+\input{titlepage/titlepage.tex} % Ctrl-W, gf - open new vim tab
+
+
+% Table of contents
+\renewcommand{\baselinestretch}{1.5}\normalsize
+	\tableofcontents
+\renewcommand{\baselinestretch}{1.3}\normalsize 
+
+
+% Input Chapters
+% \input{chapters/Maths}
+\input{chapters/Exercises} 
+\input{chapters/Plots} 
+\input{chapters/Lab} 
+
+
+\chapter{Code}
+
+\section{VHDL}
+	\lstinputlisting[style=vhdl]{code/adc_driver.vhd}
+
+\section{C}
+	\lstinputlisting[style=C]{code/app.c}
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
